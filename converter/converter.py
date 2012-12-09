@@ -15,21 +15,20 @@ import codecs
 
 
 class Map:
-  width = 0
-  height = 0
-  bbox = []
-
   def __init__(self, name, language):
     self.paths = {}
     self.name = name
     self.language = language
+    self.width = 0
+    self.heoght = 0
+    self.bbox = []
 
   def addPath(self, path, code, name):
     self.paths[code] = {"path": path, "name": name}
 
   def getJSCode(self):
     map = {"paths": self.paths, "width": self.width, "height": self.height, "insets": self.insets, "projection": self.projection}
-    return "$.fn.vectorMap('addMap', '"+self.name+"_"+self.projection['type']+"_"+self.language+"',"+anyjson.serialize(map)+');'
+    return "jQuery.fn.vectorMap('addMap', '"+self.name+"_"+self.projection['type']+"_"+self.language+"',"+anyjson.serialize(map)+');'
 
 
 class Converter:
@@ -113,7 +112,7 @@ class Converter:
           code = self.codes[name]
           self.features[code] = {"geometry": shapelyGeometry, "name": name, "code": code}
       else:
-        raise Exception, "Wrong geomtry type: "+geometryType
+        raise Exception, "Wrong geometry type: "+geometryType
 
 
   def convert(self, outputFile):
@@ -233,7 +232,6 @@ class Converter:
 parser = argparse.ArgumentParser(conflict_handler='resolve')
 parser.add_argument('input_file')
 parser.add_argument('output_file')
-parser.add_argument('--scale', type=float)
 parser.add_argument('--country_code_index', default=0, type=int)
 parser.add_argument('--country_name_index', default=1, type=int)
 parser.add_argument('--codes_file', default='', type=str)
