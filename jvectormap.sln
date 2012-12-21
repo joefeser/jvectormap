@@ -1,0 +1,78 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{773B3C99-441E-4C84-89FB-265904A2CAC8}"
+	ProjectSection(SolutionItems) = preProject
+		build.sh = build.sh
+		jquery-jvectormap.css = jquery-jvectormap.css
+		jquery-jvectormap.js = jquery-jvectormap.js
+		jquery-jvectormap.min.js = jquery-jvectormap.min.js
+		jquery-mousewheel.js = jquery-mousewheel.js
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "converter", "converter", "{841CCDC5-3D13-4C19-A53C-3D222DAC6D74}"
+	ProjectSection(SolutionItems) = preProject
+		converter\converter.py = converter\converter.py
+		converter\simplifier.py = converter\simplifier.py
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{E897E4CB-72FB-47EE-B997-95152FD3FDB2}"
+	ProjectSection(SolutionItems) = preProject
+		lib\abstract-canvas-element.js = lib\abstract-canvas-element.js
+		lib\abstract-element.js = lib\abstract-element.js
+		lib\abstract-shape-element.js = lib\abstract-shape-element.js
+		lib\color-scale.js = lib\color-scale.js
+		lib\data-series.js = lib\data-series.js
+		lib\jvectormap.js = lib\jvectormap.js
+		lib\numeric-scale.js = lib\numeric-scale.js
+		lib\ordinal-scale.js = lib\ordinal-scale.js
+		lib\proj.js = lib\proj.js
+		lib\simple-scale.js = lib\simple-scale.js
+		lib\svg-canvas-element.js = lib\svg-canvas-element.js
+		lib\svg-circle-element.js = lib\svg-circle-element.js
+		lib\svg-element.js = lib\svg-element.js
+		lib\svg-group-element.js = lib\svg-group-element.js
+		lib\svg-path-element.js = lib\svg-path-element.js
+		lib\svg-shape-element.js = lib\svg-shape-element.js
+		lib\vector-canvas.js = lib\vector-canvas.js
+		lib\vml-canvas-element.js = lib\vml-canvas-element.js
+		lib\vml-circle-element.js = lib\vml-circle-element.js
+		lib\vml-element.js = lib\vml-element.js
+		lib\vml-group-element.js = lib\vml-group-element.js
+		lib\vml-path-element.js = lib\vml-path-element.js
+		lib\vml-shape-element.js = lib\vml-shape-element.js
+		lib\world-map.js = lib\world-map.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{EE40FCE3-AE4E-43FB-A2F7-8A99B80E0B32}"
+	ProjectSection(SolutionItems) = preProject
+		tests\build.html = tests\build.html
+		tests\custom.html = tests\custom.html
+		tests\index.html = tests\index.html
+		tests\markers.html = tests\markers.html
+		tests\reverse-projection.html = tests\reverse-projection.html
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{8A0FE10B-4D73-4E7A-ACD4-C8C2229CDBA3}"
+	ProjectSection(SolutionItems) = preProject
+		tests\assets\jquery-1.8.2.js = tests\assets\jquery-1.8.2.js
+		tests\assets\jquery-jvectormap-map.js = tests\assets\jquery-jvectormap-map.js
+		tests\assets\jquery-jvectormap-us-aea-en.js = tests\assets\jquery-jvectormap-us-aea-en.js
+		tests\assets\jquery-jvectormap-us-lcc-en.js = tests\assets\jquery-jvectormap-us-lcc-en.js
+		tests\assets\jquery-jvectormap-us-merc-en.js = tests\assets\jquery-jvectormap-us-merc-en.js
+		tests\assets\jquery-jvectormap-us-mill-en.js = tests\assets\jquery-jvectormap-us-mill-en.js
+		tests\assets\jquery-jvectormap-world-mill-en.js = tests\assets\jquery-jvectormap-world-mill-en.js
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{841CCDC5-3D13-4C19-A53C-3D222DAC6D74} = {773B3C99-441E-4C84-89FB-265904A2CAC8}
+		{E897E4CB-72FB-47EE-B997-95152FD3FDB2} = {773B3C99-441E-4C84-89FB-265904A2CAC8}
+		{EE40FCE3-AE4E-43FB-A2F7-8A99B80E0B32} = {773B3C99-441E-4C84-89FB-265904A2CAC8}
+		{8A0FE10B-4D73-4E7A-ACD4-C8C2229CDBA3} = {EE40FCE3-AE4E-43FB-A2F7-8A99B80E0B32}
+	EndGlobalSection
+EndGlobal
