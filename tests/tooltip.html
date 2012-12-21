@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Map</title>
+  <link href="../jquery.jvectormap.css" media="screen" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="assets/jquery-1.8.2.js"></script>
+  <script type="text/javascript" src="../jquery.jvectormap.min.js"></script>
+  <!--Which map do we use-->
+  <script type="text/javascript" src="assets/jquery-jvectormap-us-lcc-en.js"></script>
+
+  <script type="text/javascript">
+      //us_merc_en jquery-jvectormap-us-merc-en.js --good map
+      //us_mill_en jquery-jvectormap-us-mill-en.js
+      //us_lcc_en jquery-jvectormap-us-lcc-en.js --has hi and ak
+      //us_aea_en jquery-jvectormap-us-aea-en.js --has hi and ak not as nice
+      $(function () {
+          $('#map').vectorMap({
+              map: 'us_lcc_en'
+          });
+      });
+  </script>
+</head>
+<body>
+  <div id="map" style="width: 1000px; height: 700px"></div>
+</body>
+</html>
