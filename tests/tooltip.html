@@ -5,7 +5,7 @@
     <title>Map</title>
     <link href="../jquery.jvectormap.css" media="screen" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="assets/jquery-1.8.2.js"></script>
-    <!--Begin All files needed by jvectorMap-->
+    <!--All files needed by jvectorMap Start-->
     <script type="text/javascript" src="../jquery.jvectormap.js"></script>
     <script type="text/javascript" src="../jquery.mousewheel.js"></script>
     <script type="text/javascript" src="../lib/jvectormap.js"></script>
@@ -32,7 +32,7 @@
     <script type="text/javascript" src="../lib/data-series.js"></script>
     <script type="text/javascript" src="../lib/proj.js"></script>
     <script type="text/javascript" src="../lib/world-map.js"></script>
-    <!--End All files needed by jvectorMap-->
+    <!--All files needed by jvectorMap End-->
     <!--<script type="text/javascript" src="../jquery.jvectormap.min.js"></script>-->
     <!--Which map do we use-->
     <script type="text/javascript" src="assets/jquery-jvectormap-us-merc-en.js"></script>
@@ -62,6 +62,141 @@
             });
         });
     </script>
+    <!--Tooltip Start-->
+    <style type="text/css">
+        body
+        {
+            font-family: arial;
+            font-size: 12px;
+            text-align: center;
+        }
+        div#paragraph
+        {
+            width: 300px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        a
+        {
+            color: #aaa;
+            text-decoration: none;
+            cursor: pointer;
+            cursor: hand;
+        }
+        a:hover
+        {
+            color: #000;
+            text-decoration: none;
+        }
+        .clear
+        {
+            clear: both;
+        }
+        
+        
+        /* Tooltip */
+        
+        .tooltip
+        {
+            position: absolute;
+            z-index: 9999;
+            color: #fff;
+            font-size: 10px;
+            width: 180px;
+        }
+        
+        .tooltip .tipHeader
+        {
+            height: 8px;
+            background: url(images/tipHeader.gif) no-repeat;
+        }
+        
+        
+        .tooltip .tipBody
+        {
+            background-color: #000;
+            padding: 5px 5px 5px 15px;
+        }
+        
+        .tooltip .tipFooter
+        {
+            height: 8px;
+            background: url(images/tipFooter.gif) no-repeat;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var currentToolTipCode = null;
+            //Select all anchor tag with rel set to tooltip
+            $('path').mouseover(function (e) { //a[rel=tooltip] //div[rel=tooltip] 
+                var t = $("body");
+                //Grab the title attribute's value and assign it to a variable
+                var tip = $(this).attr('title') || $(this).attr('data-code');
+                currentToolTipCode = tip;
+
+                var toolTip = $('.tooltip[data="' + tip + '"]', t);
+
+                if (toolTip.length == 0) {
+                    //Append the tooltip template and its value
+                    t.append('<div class="tooltip" data="' + tip + '"><div class="tipHeader"></div><div class="tipBody">' + tip + '</div><div class="tipFooter"></div></div>');
+                    toolTip = $('.tooltip[data="' + tip + '"]', t);
+                }
+
+                var tipBody = $(".tipBody", toolTip);
+
+                tipBody.html(tip);
+
+                console.log(tip + " show " + tipBody.html());
+
+                //make sure they don't just start showing up like crazy.
+                window.setTimeout(function () {
+                    //Show the tooltip with faceIn effect
+                    if (currentToolTipCode == tip) {
+                        toolTip.fadeIn('500', null, function () {
+                            if (currentToolTipCode != tip) {
+                                toolTip.hide();
+                                console.log("fadeIn fadeIn hide");
+                            } else {
+                                toolTip.fadeTo('10', 0.9, null, function () {
+                                    console.log("fadeIn fadeTo done");
+                                    if (currentToolTipCode != tip) {
+                                        console.log("fadeIn fadeTo hide");
+                                        toolTip.hide();
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    else {
+                        console.log("currentToolTipCode != tip " + currentToolTipCode + " " + tip);
+                    }
+                }, 250);
+
+            }).mousemove(function (e) {
+                var t = $("body");
+                var tip = $(this).attr('title') || $(this).attr('data-code');
+                //console.log("x:" + e.pageX + " y:" + e.pageY);
+                //Keep changing the X and Y axis for the tooltip, thus, the tooltip move along with the mouse
+                var toolTip = $('.tooltip[data="' + tip + '"]', t);
+                toolTip.css('top', e.pageY + 10);
+                toolTip.css('left', e.pageX + 20);
+
+            }).mouseout(function () {
+
+                currentToolTipCode = null;
+
+                var t = $("body");
+                var tip = $(this).attr('title') || $(this).attr('data-code');
+
+                var toolTip = $('.tooltip[data="' + tip + '"]', t);
+                toolTip.hide();
+
+                var tip = $(this).attr('title') || $(this).attr('data-code');
+                console.log(tip + " hide " + (toolTip != null));
+            });
+        });
+    </script>
+    <!--Tooltip End-->
 </head>
 <body>
     <!--<div id="map1" style="width: 1000px; height: 700px"></div>-->
