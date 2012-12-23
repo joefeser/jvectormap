@@ -128,13 +128,12 @@
         $(document).ready(function () {
             var currentToolTipCode = null;
             //Select all anchor tag with rel set to tooltip
-            $('path').mouseover(function (e) { //a[rel=tooltip] //div[rel=tooltip] 
+            $('path').mouseover(function (e) {
                 var t = $("body");
-                //Grab the title attribute's value and assign it to a variable
                 var tip = $(this).attr('title') || $(this).attr('data-code');
-                currentToolTipCode = tip;
-
                 var toolTip = $('.tooltip[data="' + tip + '"]', t);
+
+                //Grab the title attribute's value and assign it to a variable
 
                 if (toolTip.length == 0) {
                     //Append the tooltip template and its value
@@ -146,8 +145,6 @@
 
                 tipBody.html(tip);
 
-                console.log(tip + " show " + tipBody.html());
-
                 //make sure they don't just start showing up like crazy.
                 window.setTimeout(function () {
                     //Show the tooltip with faceIn effect
@@ -155,44 +152,32 @@
                         toolTip.fadeIn('500', null, function () {
                             if (currentToolTipCode != tip) {
                                 toolTip.hide();
-                                console.log("fadeIn fadeIn hide");
                             } else {
                                 toolTip.fadeTo('10', 0.9, null, function () {
-                                    console.log("fadeIn fadeTo done");
                                     if (currentToolTipCode != tip) {
-                                        console.log("fadeIn fadeTo hide");
                                         toolTip.hide();
                                     }
                                 });
                             }
                         });
                     }
-                    else {
-                        console.log("currentToolTipCode != tip " + currentToolTipCode + " " + tip);
-                    }
                 }, 250);
 
+                currentToolTipCode = tip;
             }).mousemove(function (e) {
                 var t = $("body");
                 var tip = $(this).attr('title') || $(this).attr('data-code');
-                //console.log("x:" + e.pageX + " y:" + e.pageY);
                 //Keep changing the X and Y axis for the tooltip, thus, the tooltip move along with the mouse
                 var toolTip = $('.tooltip[data="' + tip + '"]', t);
-                toolTip.css('top', e.pageY + 10);
-                toolTip.css('left', e.pageX + 20);
+                toolTip.css('top', e.pageY + 10).css('left', e.pageX + 20);
 
             }).mouseout(function () {
-
-                currentToolTipCode = null;
-
                 var t = $("body");
                 var tip = $(this).attr('title') || $(this).attr('data-code');
-
                 var toolTip = $('.tooltip[data="' + tip + '"]', t);
                 toolTip.hide();
-
-                var tip = $(this).attr('title') || $(this).attr('data-code');
-                console.log(tip + " hide " + (toolTip != null));
+                
+                currentToolTipCode = null;
             });
         });
     </script>
