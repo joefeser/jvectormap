@@ -167,16 +167,43 @@
             }).mousemove(function (e) {
                 var t = $("body");
                 var tip = $(this).attr('title') || $(this).attr('data-code');
+                var containerWidth = $("body").width();
+                var containerHeight = $("body").height();
+                //now try to find the div that we are contained in.
+
+                var parent = $(this).parent();
+                while (parent && parent.get(0) && parent.get(0).tagName.toString().toLowerCase() != "div") {
+                    parent = parent.parent();
+                }
+
+                containerWidth = parent.width();
+                containerHeight = parent.height();
+
                 //Keep changing the X and Y axis for the tooltip, thus, the tooltip move along with the mouse
                 var toolTip = $('.tooltip[data="' + tip + '"]', t);
-                toolTip.css('top', e.pageY + 10).css('left', e.pageX + 20);
+
+                var right = e.pageX + 20 + toolTip.width();
+                var top = e.pageY + 10 + toolTip.height();
+
+                var x = e.pageX + 20;
+                var y = e.pageY + 10;
+
+                if (right > containerWidth) {
+                    x = containerWidth - toolTip.width();
+                }
+
+                if (top > containerHeight) {
+                    y = containerHeight - toolTip.height();
+                }
+
+                toolTip.css('top', y).css('left', x);
 
             }).mouseout(function () {
                 var t = $("body");
                 var tip = $(this).attr('title') || $(this).attr('data-code');
                 var toolTip = $('.tooltip[data="' + tip + '"]', t);
                 toolTip.hide();
-                
+
                 currentToolTipCode = null;
             });
         });
