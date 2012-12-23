@@ -51,6 +51,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{EE40FCE3
 		tests\index.html = tests\index.html
 		tests\markers.html = tests\markers.html
 		tests\reverse-projection.html = tests\reverse-projection.html
+		tests\tooltip.html = tests\tooltip.html
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{8A0FE10B-4D73-4E7A-ACD4-C8C2229CDBA3}"
