@@ -47,6 +47,13 @@
             //              map: 'us_merc_en'
             //          });
 
+            $(window).resize(function () {
+                $('#map2').width($(window).width());
+                $('#map2').height($(window).height());
+            });
+
+            $('#map2').height($(window).height());
+
             $('#map2').vectorMap({
                 map: 'us_lcc_en',
                 onRegionLabelShow: function (e, label, code) {
@@ -216,7 +223,7 @@
 </head>
 <body>
     <!--<div id="map1" style="width: 1000px; height: 700px"></div>-->
-    <div id="map2" style="width: 1000px; height: 700px">
+    <div id="map2" style="width: 100%; height: 600px;">
     </div>
 </body>
 </html>
