@@ -92,6 +92,7 @@
                         $("#mapModal").vectorMap({
                             map: "45_mill_en"
                         });
+                        assignToolTip($("#mapModal path"));
                     });
                 }
             });
@@ -162,7 +163,11 @@
         $(document).ready(function () {
             var currentToolTipCode = null;
             //Select all anchor tag with rel set to tooltip
-            $('path').mouseover(function (e) {
+            assignToolTip($('path'));
+        });
+
+        function assignToolTip(selector) {
+            selector.mouseover(function (e) {
                 var t = $("body");
                 var tip = $(this).attr('title') || $(this).attr('data-code');
                 var toolTip = $('.tooltip[data="' + tip + '"]', t);
@@ -241,7 +246,8 @@
 
                 currentToolTipCode = null;
             });
-        });
+        }
+
     </script>
     <!--Tooltip End-->
 </head>
