@@ -59,12 +59,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{8A0FE1
 	ProjectSection(SolutionItems) = preProject
 		tests\assets\45.js = tests\assets\45.js
 		tests\assets\45county.js = tests\assets\45county.js
+		tests\assets\close.png = tests\assets\close.png
 		tests\assets\jquery-jvectormap-map.js = tests\assets\jquery-jvectormap-map.js
 		tests\assets\jquery-jvectormap-us-aea-en.js = tests\assets\jquery-jvectormap-us-aea-en.js
 		tests\assets\jquery-jvectormap-us-lcc-en.js = tests\assets\jquery-jvectormap-us-lcc-en.js
 		tests\assets\jquery-jvectormap-us-merc-en.js = tests\assets\jquery-jvectormap-us-merc-en.js
 		tests\assets\jquery-jvectormap-us-mill-en.js = tests\assets\jquery-jvectormap-us-mill-en.js
 		tests\assets\jquery-jvectormap-world-mill-en.js = tests\assets\jquery-jvectormap-world-mill-en.js
+		tests\assets\jquery.modal.css = tests\assets\jquery.modal.css
+		tests\assets\jquery.modal.min.js = tests\assets\jquery.modal.min.js
+		tests\assets\spinner.gif = tests\assets\spinner.gif
 	EndProjectSection
 EndProject
 Global
