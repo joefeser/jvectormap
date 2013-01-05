@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="assets/jquery.modal.css" type="text/css" media="screen" />
     <!--jquery modal end-->
     <!--Which map do we use-->
-    <script type="text/javascript" src="assets/jquery-jvectormap-us-merc-en.js"></script>
+    <!--<script type="text/javascript" src="assets/jquery-jvectormap-us-merc-en.js"></script>-->
     <script type="text/javascript" src="assets/jquery-jvectormap-us-lcc-en.js"></script>
     <!--<script type="text/javascript" src="assets/45county.js"></script>-->
     <script type="text/javascript">
@@ -71,8 +71,32 @@
             $("#mapModal").width($(window).width() * .90);
             $("#mapModal").height($(window).height() * .90);
 
-            $("#map2").vectorMap({
+            var map = new jvm.WorldMap({
+                container: $("#map2"),
                 map: "us_lcc_en", //45_mill_en
+                series: {
+                  regions: [{
+                    scale: {
+                      red: '#ff0000',
+                      blue: '#00ff00',
+                      yellow: '#ffbf03'
+                    },
+                    attribute: 'fill',
+                    normalizeFunction: 'polynomial',
+                    values: {
+                      "US-KS": 'yellow',
+                      "US-MO": 'red',
+                      "US-IA": 'blue',
+                      "US-NE": 'blue'
+                    }
+                  },{
+                    values: {
+                      "US-NY": 'blue',
+                      "US-FL": 'blue'
+                    },
+                    attribute: 'fill'
+                  }]
+                },
                 onRegionLabelShow: function (e, label, code) {
                     e.preventDefault();
                     //console.log('label:' + typeof(label) + " code:" + code);
@@ -94,7 +118,8 @@
                         });
                         assignToolTip($("#mapModal path"));
                     });
-                }
+                },
+                regionsSelectable: false,
             });
         });
     </script>
