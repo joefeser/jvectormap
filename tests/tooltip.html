@@ -43,6 +43,8 @@
     <script type="text/javascript" src="assets/jquery-jvectormap-us-lcc-en.js"></script>
     <!--<script type="text/javascript" src="assets/45county.js"></script>-->
     <script type="text/javascript">
+        var theMap = null;
+        var popupMap = null;
         //us_merc_en jquery-jvectormap-us-merc-en.js --good map hi and ak are upright.
         //us_mill_en jquery-jvectormap-us-mill-en.js
         //us_lcc_en jquery-jvectormap-us-lcc-en.js --has hi and ak
@@ -108,19 +110,38 @@
                     //console.log("onRegionOut code:" + code);
                 },
                 onRegionClick: function (e, code) {
-                    //console.log("onRegionClick code:" + code);
+                    console.log("onRegionClick code:" + code);
                     $.get("sc.html?z=" + (new Date()).toString("mmhhMMss"), function (html) {
                         $(html).appendTo("body");
                         $("#mapModal").empty(); //must be cleared first.
                         $("#mapModal").modal();
-                        $("#mapModal").vectorMap({
-                            map: "45_mill_en"
+                        popupMap = new jvm.WorldMap({
+                            container:  $("#mapModal"),
+                            map: "45_mill_en",
+                            series: {
+                              regions: [{
+                                scale: {
+                                  red: '#ff0000',
+                                  blue: '#00ff00',
+                                  yellow: '#ffbf03'
+                                },
+                                attribute: 'fill',
+                                normalizeFunction: 'polynomial',
+                                values: {
+                                  "077": 'yellow',
+                                  "023": 'red',
+                                  "011": 'blue',
+                                  "089": 'blue'
+                                }
+                              }]
+                            }
                         });
                         assignToolTip($("#mapModal path"));
                     });
                 },
                 regionsSelectable: false,
             });
+            theMap = map;
         });
     </script>
     <!--Tooltip Start-->
