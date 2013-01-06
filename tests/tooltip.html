@@ -60,6 +60,8 @@
 
                 $("#mapModal").width($(window).width() * .90);
                 $("#mapModal").height($(window).height() * .90);
+                $("#mapModalMap").width($("#mapModal").width() * .90)
+                $("#mapModalMap").height($("#mapModal").height())
 
                 if ($("#mapModal").is(":visible")) {
                     //you must remodal the div or the position will not be correct
@@ -73,31 +75,149 @@
             $("#mapModal").width($(window).width() * .90);
             $("#mapModal").height($(window).height() * .90);
 
+            $("#mapModalMap").width($("#mapModal").width() * .90)
+            $("#mapModalMap").height($("#mapModal").height())
+
+            $("#mapCounty").click(function () {
+                $.get("assets/45county.js?z=" + (new Date()).toString("mmhhMMss"), function (html) {
+                    eval(html);
+                    $("#mapModalMap").empty(); //must be cleared first.
+                    $("#mapModal").modal();
+                    popupMap = new jvm.WorldMap({
+                        container: $("#mapModalMap"),
+                        map: "45_mill_county_en",
+                        series: {
+                            regions: [{
+                                scale: {
+                                    red: '#ff0000',
+                                    blue: '#00ff00',
+                                    yellow: '#ffbf03'
+                                },
+                                attribute: 'fill',
+                                normalizeFunction: 'polynomial',
+                                values: {
+                                    "077": 'yellow',
+                                    "023": 'red',
+                                    "011": 'blue',
+                                    "089": 'blue'
+                                }
+                            }]
+                        }
+                    });
+                    assignToolTip($("#mapModalMap path"));
+                });
+            });
+
+            $("#mapFedHouse").click(function () {
+                $.get("assets/45.js?z=" + (new Date()).toString("mmhhMMss"), function (html) {
+                    eval(html);
+                    $("#mapModalMap").empty(); //must be cleared first.
+                    $("#mapModal").modal();
+                    popupMap = new jvm.WorldMap({
+                        container: $("#mapModalMap"),
+                        map: "45_mill_en",
+                        series: {
+                            regions: [{
+                                scale: {
+                                    red: '#ff0000',
+                                    blue: '#00ff00',
+                                    yellow: '#ffbf03'
+                                },
+                                attribute: 'fill',
+                                normalizeFunction: 'polynomial'
+                            }]
+                        }
+                    });
+                    assignToolTip($("#mapModalMap path"));
+
+                    popupMap.series.regions[0].setValues({
+                        "03": "yellow",
+                        "06": "red"
+                    });
+                });
+            });
+
+            $("#mapStateSenate").click(function () {
+                $.get("assets/45sldu.js?z=" + (new Date()).toString("mmhhMMss"), function (html) {
+                    eval(html);
+                    $("#mapModalMap").empty(); //must be cleared first.
+                    $("#mapModal").modal();
+                    popupMap = new jvm.WorldMap({
+                        container: $("#mapModalMap"),
+                        map: "45_mill_sldu_en",
+                        series: {
+                            regions: [{
+                                scale: {
+                                    red: '#ff0000',
+                                    blue: '#00ff00',
+                                    yellow: '#ffbf03'
+                                },
+                                attribute: 'fill',
+                                normalizeFunction: 'polynomial'
+                            }]
+                        }
+                    });
+                    assignToolTip($("#mapModalMap path"));
+                    popupMap.series.regions[0].setValues({
+                        "005": "yellow",
+                        "027": "red"
+                    });
+                });
+            });
+
+            $("#mapStateHouse").click(function () {
+                $.get("assets/45sldl.js?z=" + (new Date()).toString("mmhhMMss"), function (html) {
+                    eval(html);
+                    $("#mapModalMap").empty(); //must be cleared first.
+                    $("#mapModal").modal();
+                    popupMap = new jvm.WorldMap({
+                        container: $("#mapModalMap"),
+                        map: "45_mill_sldl_en",
+                        series: {
+                            regions: [{
+                                scale: {
+                                    red: '#ff0000',
+                                    blue: '#00ff00',
+                                    yellow: '#ffbf03'
+                                },
+                                attribute: 'fill',
+                                normalizeFunction: 'polynomial'
+                            }]
+                        }
+                    });
+                    assignToolTip($("#mapModalMap path"));
+                    popupMap.series.regions[0].setValues({
+                        "041": "yellow",
+                        "093": "red"
+                    });
+                });
+            });
+
             var map = new jvm.WorldMap({
                 container: $("#map2"),
                 map: "us_lcc_en", //45_mill_en
                 series: {
-                  regions: [{
-                    scale: {
-                      red: '#ff0000',
-                      blue: '#00ff00',
-                      yellow: '#ffbf03'
-                    },
-                    attribute: 'fill',
-                    normalizeFunction: 'polynomial',
-                    values: {
-                      "US-KS": 'yellow',
-                      "US-MO": 'red',
-                      "US-IA": 'blue',
-                      "US-NE": 'blue'
-                    }
-                  },{
-                    values: {
-                      "US-NY": 'blue',
-                      "US-FL": 'blue'
-                    },
-                    attribute: 'fill'
-                  }]
+                    regions: [{
+                        scale: {
+                            red: '#ff0000',
+                            blue: '#00ff00',
+                            yellow: '#ffbf03'
+                        },
+                        attribute: 'fill',
+                        normalizeFunction: 'polynomial',
+                        values: {
+                            "US-KS": 'yellow',
+                            "US-MO": 'red',
+                            "US-IA": 'blue',
+                            "US-NE": 'blue'
+                        }
+                    }, {
+                        values: {
+                            "US-NY": 'blue',
+                            "US-FL": 'blue'
+                        },
+                        attribute: 'fill'
+                    }]
                 },
                 onRegionLabelShow: function (e, label, code) {
                     e.preventDefault();
@@ -111,35 +231,35 @@
                 },
                 onRegionClick: function (e, code) {
                     console.log("onRegionClick code:" + code);
-                    $.get("sc.html?z=" + (new Date()).toString("mmhhMMss"), function (html) {
-                        $(html).appendTo("body");
-                        $("#mapModal").empty(); //must be cleared first.
+                    $.get("assets/45county.js?z=" + (new Date()).toString("mmhhMMss"), function (html) {
+                        eval(html);
+                        $("#mapModalMap").empty(); //must be cleared first.
                         $("#mapModal").modal();
                         popupMap = new jvm.WorldMap({
-                            container:  $("#mapModal"),
-                            map: "45_mill_en",
+                            container: $("#mapModalMap"),
+                            map: "45_mill_county_en",
                             series: {
-                              regions: [{
-                                scale: {
-                                  red: '#ff0000',
-                                  blue: '#00ff00',
-                                  yellow: '#ffbf03'
-                                },
-                                attribute: 'fill',
-                                normalizeFunction: 'polynomial',
-                                values: {
-                                  "077": 'yellow',
-                                  "023": 'red',
-                                  "011": 'blue',
-                                  "089": 'blue'
-                                }
-                              }]
+                                regions: [{
+                                    scale: {
+                                        red: '#ff0000',
+                                        blue: '#00ff00',
+                                        yellow: '#ffbf03'
+                                    },
+                                    attribute: 'fill',
+                                    normalizeFunction: 'polynomial',
+                                    values: {
+                                        "077": 'yellow',
+                                        "023": 'red',
+                                        "011": 'blue',
+                                        "089": 'blue'
+                                    }
+                                }]
                             }
                         });
-                        assignToolTip($("#mapModal path"));
+                        assignToolTip($("#mapModalMap path"));
                     });
                 },
-                regionsSelectable: false,
+                regionsSelectable: false
             });
             theMap = map;
         });
@@ -206,8 +326,8 @@
         }
     </style>
     <script type="text/javascript">
+        var currentToolTipCode = null;
         $(document).ready(function () {
-            var currentToolTipCode = null;
             //Select all anchor tag with rel set to tooltip
             assignToolTip($('path'));
         });
@@ -302,6 +422,18 @@
     <div id="map2" style="width: 100%; height: 600px;">
     </div>
     <div id="mapModal" style="width: 90%; height: 400px; display: none;">
+        <div style="float: left" id="mapModalNavigation">
+            <div id="mapCounty">
+                County</div>
+            <div id="mapFedHouse">
+                Fed House</div>
+            <div id="mapStateSenate">
+                State Senate</div>
+            <div id="mapStateHouse">
+                State House</div>
+        </div>
+        <div style="float: right" id="mapModalMap">
+        </div>
     </div>
 </body>
 </html>
