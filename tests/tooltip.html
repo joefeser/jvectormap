@@ -55,34 +55,21 @@
             //          });
 
             $(window).resize(function () {
-                $("#map2").width($(window).width());
-                $("#map2").height($(window).height());
-
-                $("#mapModal").width($(window).width() * .90);
-                $("#mapModal").height($(window).height() * .90);
-                $("#mapModalMap").width($("#mapModal").width() * .90)
-                $("#mapModalMap").height($("#mapModal").height())
+                setMapSize();
 
                 if ($("#mapModal").is(":visible")) {
                     //you must remodal the div or the position will not be correct
-                    $("#mapModal").modal();
+                    $.modal.resize();
                 }
             });
 
-            $("#map2").width($(window).width());
-            $("#map2").height($(window).height());
-
-            $("#mapModal").width($(window).width() * .90);
-            $("#mapModal").height($(window).height() * .90);
-
-            $("#mapModalMap").width($("#mapModal").width() * .90)
-            $("#mapModalMap").height($("#mapModal").height())
+            setMapSize();
 
             $("#mapCounty").click(function () {
                 $.get("assets/45county.js?z=" + (new Date()).toString("mmhhMMss"), function (html) {
                     eval(html);
                     $("#mapModalMap").empty(); //must be cleared first.
-                    $("#mapModal").modal();
+                    
                     popupMap = new jvm.WorldMap({
                         container: $("#mapModalMap"),
                         map: "45_mill_county_en",
@@ -112,7 +99,7 @@
                 $.get("assets/45.js?z=" + (new Date()).toString("mmhhMMss"), function (html) {
                     eval(html);
                     $("#mapModalMap").empty(); //must be cleared first.
-                    $("#mapModal").modal();
+                    
                     popupMap = new jvm.WorldMap({
                         container: $("#mapModalMap"),
                         map: "45_mill_en",
@@ -141,7 +128,7 @@
                 $.get("assets/45sldu.js?z=" + (new Date()).toString("mmhhMMss"), function (html) {
                     eval(html);
                     $("#mapModalMap").empty(); //must be cleared first.
-                    $("#mapModal").modal();
+                    
                     popupMap = new jvm.WorldMap({
                         container: $("#mapModalMap"),
                         map: "45_mill_sldu_en",
@@ -169,7 +156,7 @@
                 $.get("assets/45sldl.js?z=" + (new Date()).toString("mmhhMMss"), function (html) {
                     eval(html);
                     $("#mapModalMap").empty(); //must be cleared first.
-                    $("#mapModal").modal();
+                    
                     popupMap = new jvm.WorldMap({
                         container: $("#mapModalMap"),
                         map: "45_mill_sldl_en",
@@ -262,6 +249,18 @@
                 regionsSelectable: false
             });
             theMap = map;
+
+            function setMapSize() {
+                $("#map2").width($(window).width());
+                $("#map2").height($(window).height());
+
+                $("#mapModal").width($(window).width() * .90);
+                $("#mapModal").height($(window).height() * .90);
+
+                $("#mapModalMap").width($("#mapModal").width() * .90)
+                $("#mapModalMap").height($("#mapModal").height())
+            }
+
         });
     </script>
     <!--Tooltip Start-->
