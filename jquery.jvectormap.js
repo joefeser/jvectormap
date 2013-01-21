@@ -23,7 +23,7 @@
         }
       };
 
-  $.fn.vectorMap = function(options) {
+  jQuery.fn.vectorMap = function(options) {
     var map,
         methodName,
         event,

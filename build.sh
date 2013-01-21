@@ -1,8 +1,8 @@
 #!/bin/bash
 
 files=( \
-  jquery-jvectormap.js \
-  jquery-mousewheel.js \
+  jquery.jvectormap.js \
+  jquery.mousewheel.js \
   lib/jvectormap.js \
   lib/abstract-element.js \
   lib/abstract-canvas-element.js \
