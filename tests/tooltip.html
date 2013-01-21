@@ -1,0 +1,438 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Map</title>
+    <link href="../jquery.jvectormap.css" media="screen" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="assets/jquery-1.8.2.js"></script>
+    <!--All files needed by jvectorMap Start-->
+    <script type="text/javascript" src="../jquery.jvectormap.js"></script>
+    <script type="text/javascript" src="../jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="../lib/jvectormap.js"></script>
+    <script type="text/javascript" src="../lib/abstract-element.js"></script>
+    <script type="text/javascript" src="../lib/abstract-canvas-element.js"></script>
+    <script type="text/javascript" src="../lib/abstract-shape-element.js"></script>
+    <script type="text/javascript" src="../lib/svg-element.js"></script>
+    <script type="text/javascript" src="../lib/svg-group-element.js"></script>
+    <script type="text/javascript" src="../lib/svg-canvas-element.js"></script>
+    <script type="text/javascript" src="../lib/svg-shape-element.js"></script>
+    <script type="text/javascript" src="../lib/svg-path-element.js"></script>
+    <script type="text/javascript" src="../lib/svg-circle-element.js"></script>
+    <script type="text/javascript" src="../lib/vml-element.js"></script>
+    <script type="text/javascript" src="../lib/vml-group-element.js"></script>
+    <script type="text/javascript" src="../lib/vml-canvas-element.js"></script>
+    <script type="text/javascript" src="../lib/vml-shape-element.js"></script>
+    <script type="text/javascript" src="../lib/vml-path-element.js"></script>
+    <script type="text/javascript" src="../lib/vml-circle-element.js"></script>
+    <script type="text/javascript" src="../lib/vector-canvas.js"></script>
+    <script type="text/javascript" src="../lib/simple-scale.js"></script>
+    <script type="text/javascript" src="../lib/numeric-scale.js"></script>
+    <script type="text/javascript" src="../lib/ordinal-scale.js"></script>
+    <script type="text/javascript" src="../lib/color-scale.js"></script>
+    <script type="text/javascript" src="../lib/data-series.js"></script>
+    <script type="text/javascript" src="../lib/proj.js"></script>
+    <script type="text/javascript" src="../lib/world-map.js"></script>
+    <!--All files needed by jvectorMap End-->
+    <!--<script type="text/javascript" src="../jquery.jvectormap.min.js"></script>-->
+    <!--jquery modal start-->
+    <script type="text/javascript" src="assets/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="assets/jquery.modal.css" type="text/css" media="screen" />
+    <!--jquery modal end-->
+    <!--Which map do we use-->
+    <!--<script type="text/javascript" src="assets/jquery-jvectormap-us-merc-en.js"></script>-->
+    <script type="text/javascript" src="assets/jquery-jvectormap-us-lcc-en.js"></script>
+    <!--<script type="text/javascript" src="assets/45county.js"></script>-->
+    <script type="text/javascript">
+        var theMap = null;
+        var popupMap = null;
+        //us_merc_en jquery-jvectormap-us-merc-en.js --good map hi and ak are upright.
+        //us_mill_en jquery-jvectormap-us-mill-en.js
+        //us_lcc_en jquery-jvectormap-us-lcc-en.js --has hi and ak
+        //us_aea_en jquery-jvectormap-us-aea-en.js --has hi and ak not as nice
+        $(function () {
+            //          $('#map1').vectorMap({
+            //              map: 'us_merc_en'
+            //          });
+
+            $(window).resize(function () {
+                setMapSize();
+
+                if ($("#mapModal").is(":visible")) {
+                    //you must remodal the div or the position will not be correct
+                    $.modal.resize();
+                }
+            });
+
+            setMapSize();
+
+            $("#mapCounty").click(function () {
+                $.get("assets/45county.js?z=" + (new Date()).toString("mmhhMMss"), function (html) {
+                    eval(html);
+                    $("#mapModalMap").empty(); //must be cleared first.
+                    
+                    popupMap = new jvm.WorldMap({
+                        container: $("#mapModalMap"),
+                        map: "45_mill_county_en",
+                        series: {
+                            regions: [{
+                                scale: {
+                                    red: '#ff0000',
+                                    blue: '#00ff00',
+                                    yellow: '#ffbf03'
+                                },
+                                attribute: 'fill',
+                                normalizeFunction: 'polynomial',
+                                values: {
+                                    "077": 'yellow',
+                                    "023": 'red',
+                                    "011": 'blue',
+                                    "089": 'blue'
+                                }
+                            }]
+                        }
+                    });
+                    assignToolTip($("#mapModalMap path"));
+                });
+            });
+
+            $("#mapFedHouse").click(function () {
+                $.get("assets/45.js?z=" + (new Date()).toString("mmhhMMss"), function (html) {
+                    eval(html);
+                    $("#mapModalMap").empty(); //must be cleared first.
+                    
+                    popupMap = new jvm.WorldMap({
+                        container: $("#mapModalMap"),
+                        map: "45_mill_en",
+                        series: {
+                            regions: [{
+                                scale: {
+                                    red: '#ff0000',
+                                    blue: '#00ff00',
+                                    yellow: '#ffbf03'
+                                },
+                                attribute: 'fill',
+                                normalizeFunction: 'polynomial'
+                            }]
+                        }
+                    });
+                    assignToolTip($("#mapModalMap path"));
+
+                    popupMap.series.regions[0].setValues({
+                        "03": "yellow",
+                        "06": "red"
+                    });
+                });
+            });
+
+            $("#mapStateSenate").click(function () {
+                $.get("assets/45sldu.js?z=" + (new Date()).toString("mmhhMMss"), function (html) {
+                    eval(html);
+                    $("#mapModalMap").empty(); //must be cleared first.
+                    
+                    popupMap = new jvm.WorldMap({
+                        container: $("#mapModalMap"),
+                        map: "45_mill_sldu_en",
+                        series: {
+                            regions: [{
+                                scale: {
+                                    red: '#ff0000',
+                                    blue: '#00ff00',
+                                    yellow: '#ffbf03'
+                                },
+                                attribute: 'fill',
+                                normalizeFunction: 'polynomial'
+                            }]
+                        }
+                    });
+                    assignToolTip($("#mapModalMap path"));
+                    popupMap.series.regions[0].setValues({
+                        "005": "yellow",
+                        "027": "red"
+                    });
+                });
+            });
+
+            $("#mapStateHouse").click(function () {
+                $.get("assets/45sldl.js?z=" + (new Date()).toString("mmhhMMss"), function (html) {
+                    eval(html);
+                    $("#mapModalMap").empty(); //must be cleared first.
+                    
+                    popupMap = new jvm.WorldMap({
+                        container: $("#mapModalMap"),
+                        map: "45_mill_sldl_en",
+                        series: {
+                            regions: [{
+                                scale: {
+                                    red: '#ff0000',
+                                    blue: '#00ff00',
+                                    yellow: '#ffbf03'
+                                },
+                                attribute: 'fill',
+                                normalizeFunction: 'polynomial'
+                            }]
+                        }
+                    });
+                    assignToolTip($("#mapModalMap path"));
+                    popupMap.series.regions[0].setValues({
+                        "041": "yellow",
+                        "093": "red"
+                    });
+                });
+            });
+
+            var map = new jvm.WorldMap({
+                container: $("#map2"),
+                map: "us_lcc_en", //45_mill_en
+                series: {
+                    regions: [{
+                        scale: {
+                            red: '#ff0000',
+                            blue: '#00ff00',
+                            yellow: '#ffbf03'
+                        },
+                        attribute: 'fill',
+                        normalizeFunction: 'polynomial',
+                        values: {
+                            "US-KS": 'yellow',
+                            "US-MO": 'red',
+                            "US-IA": 'blue',
+                            "US-NE": 'blue'
+                        }
+                    }, {
+                        values: {
+                            "US-NY": 'blue',
+                            "US-FL": 'blue'
+                        },
+                        attribute: 'fill'
+                    }]
+                },
+                onRegionLabelShow: function (e, label, code) {
+                    e.preventDefault();
+                    //console.log('label:' + typeof(label) + " code:" + code);
+                },
+                onRegionOver: function (e, code) {
+                    //console.log("onRegionOver code:" + code);
+                },
+                onRegionOut: function (e, code) {
+                    //console.log("onRegionOut code:" + code);
+                },
+                onRegionClick: function (e, code) {
+                    console.log("onRegionClick code:" + code);
+                    $.get("assets/45county.js?z=" + (new Date()).toString("mmhhMMss"), function (html) {
+                        eval(html);
+                        $("#mapModalMap").empty(); //must be cleared first.
+                        $("#mapModal").modal();
+                        popupMap = new jvm.WorldMap({
+                            container: $("#mapModalMap"),
+                            map: "45_mill_county_en",
+                            series: {
+                                regions: [{
+                                    scale: {
+                                        red: '#ff0000',
+                                        blue: '#00ff00',
+                                        yellow: '#ffbf03'
+                                    },
+                                    attribute: 'fill',
+                                    normalizeFunction: 'polynomial',
+                                    values: {
+                                        "077": 'yellow',
+                                        "023": 'red',
+                                        "011": 'blue',
+                                        "089": 'blue'
+                                    }
+                                }]
+                            }
+                        });
+                        assignToolTip($("#mapModalMap path"));
+                    });
+                },
+                regionsSelectable: false
+            });
+            theMap = map;
+
+            function setMapSize() {
+                $("#map2").width($(window).width());
+                $("#map2").height($(window).height());
+
+                $("#mapModal").width($(window).width() * .90);
+                $("#mapModal").height($(window).height() * .90);
+
+                $("#mapModalMap").width($("#mapModal").width() * .90)
+                $("#mapModalMap").height($("#mapModal").height())
+            }
+
+        });
+    </script>
+    <!--Tooltip Start-->
+    <style type="text/css">
+        body
+        {
+            font-family: arial;
+            font-size: 12px;
+            text-align: center;
+        }
+        div#paragraph
+        {
+            width: 300px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        a
+        {
+            color: #aaa;
+            text-decoration: none;
+            cursor: pointer;
+            cursor: hand;
+        }
+        a:hover
+        {
+            color: #000;
+            text-decoration: none;
+        }
+        .clear
+        {
+            clear: both;
+        }
+        
+        
+        /* Tooltip */
+        
+        .tooltip
+        {
+            position: absolute;
+            z-index: 9999;
+            color: #fff;
+            font-size: 10px;
+            width: 180px;
+        }
+        
+        .tooltip .tipHeader
+        {
+            height: 8px;
+            background: url(images/tipHeader.gif) no-repeat;
+        }
+        
+        .tooltip .tipBody
+        {
+            background-color: #000;
+            padding: 5px 5px 5px 15px;
+        }
+        
+        .tooltip .tipFooter
+        {
+            height: 8px;
+            background: url(images/tipFooter.gif) no-repeat;
+        }
+    </style>
+    <script type="text/javascript">
+        var currentToolTipCode = null;
+        $(document).ready(function () {
+            //Select all anchor tag with rel set to tooltip
+            assignToolTip($('path'));
+        });
+
+        function assignToolTip(selector) {
+            selector.mouseover(function (e) {
+                var t = $("body");
+                var tip = $(this).attr('title') || $(this).attr('data-code');
+                var toolTip = $('.tooltip[data="' + tip + '"]', t);
+
+                //Grab the title attribute's value and assign it to a variable
+
+                if (toolTip.length == 0) {
+                    //Append the tooltip template and its value
+                    t.append('<div class="tooltip" data="' + tip + '"><div class="tipHeader"></div><div class="tipBody">' + tip + '</div><div class="tipFooter"></div></div>');
+                    toolTip = $('.tooltip[data="' + tip + '"]', t);
+                }
+
+                var tipBody = $(".tipBody", toolTip);
+
+                tipBody.html(tip);
+
+                //make sure they don't just start showing up like crazy.
+                //other option in the future http://blog.project-sierra.de/archives/1559
+                window.setTimeout(function () {
+                    //Show the tooltip with faceIn effect
+                    if (currentToolTipCode == tip) {
+                        toolTip.fadeIn('500', null, function () {
+                            if (currentToolTipCode != tip) {
+                                toolTip.hide();
+                            } else {
+                                toolTip.fadeTo('10', 0.9, null, function () {
+                                    if (currentToolTipCode != tip) {
+                                        toolTip.hide();
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }, 250);
+
+                currentToolTipCode = tip;
+            }).mousemove(function (e) {
+                var t = $("body");
+                var tip = $(this).attr('title') || $(this).attr('data-code');
+                var containerWidth = $("body").width();
+                var containerHeight = $("body").height();
+                //now try to find the div that we are contained in.
+
+                var parent = $(this).parent();
+                while (parent && parent.get(0) && parent.get(0).tagName.toString().toLowerCase() != "div") {
+                    parent = parent.parent();
+                }
+
+                containerWidth = parent.width();
+                containerHeight = parent.height();
+
+                //Keep changing the X and Y axis for the tooltip, thus, the tooltip move along with the mouse
+                var toolTip = $('.tooltip[data="' + tip + '"]', t);
+
+                var right = e.pageX + 20 + toolTip.width();
+                var top = e.pageY + 10 + toolTip.height();
+
+                var x = e.pageX + 20;
+                var y = e.pageY + 10;
+
+                if (right > containerWidth) {
+                    x = containerWidth - toolTip.width();
+                }
+
+                if (top > containerHeight) {
+                    y = containerHeight - toolTip.height();
+                }
+
+                toolTip.css('top', y).css('left', x);
+
+            }).mouseout(function () {
+                var t = $("body");
+                var tip = $(this).attr('title') || $(this).attr('data-code');
+                var toolTip = $('.tooltip[data="' + tip + '"]', t);
+                toolTip.hide();
+
+                currentToolTipCode = null;
+            });
+        }
+
+    </script>
+    <!--Tooltip End-->
+</head>
+<body>
+    <!--<div id="map1" style="width: 1000px; height: 700px"></div>-->
+    <div id="map2" style="width: 100%; height: 600px;">
+    </div>
+    <div id="mapModal" style="width: 90%; height: 400px; display: none;">
+        <div style="float: left" id="mapModalNavigation">
+            <div id="mapCounty">
+                County</div>
+            <div id="mapFedHouse">
+                Fed House</div>
+            <div id="mapStateSenate">
+                State Senate</div>
+            <div id="mapStateHouse">
+                State House</div>
+        </div>
+        <div style="float: right" id="mapModalMap">
+        </div>
+    </div>
+</body>
+</html>
