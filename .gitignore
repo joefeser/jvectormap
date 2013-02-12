@@ -3,3 +3,4 @@ jquery.jvectormap.min.js
 *.suo
 startnode.sh
 *.user
+*.zzz
